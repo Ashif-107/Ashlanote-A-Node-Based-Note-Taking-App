@@ -15,6 +15,7 @@ import {
     type ColorMode,
     Position,
 } from '@xyflow/react';
+import Image from 'next/image';
 
 import '@xyflow/react/dist/style.css';
 
@@ -69,9 +70,14 @@ export default function Home() {
     const [newNodeShape, setNewNodeShape] = useState('circle');
 
     const [showField, setShowField] = useState(false);
+    const [showShapeField, setShowShapeField] = useState(false);
 
     const handleAddButtonClick = () => {
         setShowField(!showField);
+    };
+
+    const handleShapeButtonClick = () => {
+        setShowShapeField(!showShapeField);
     };
 
 
@@ -137,7 +143,10 @@ export default function Home() {
             <div style={{ width: '100vw', height: '100vh' }} className=''>
                 <ReactFlow
                     colorMode={colorMode}
-                    nodes={nodes}
+                    nodes={nodes.map((node) => ({
+                        ...node,
+                        data: { ...node.data, colorMode }, // Include colorMode in node data
+                    }))}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
@@ -165,8 +174,8 @@ export default function Home() {
                         <option value="system">system</option>
                     </select>
                 </div>
-                <div className="absolute top-[150px] left-5 ">
-                    <button onClick={handleAddButtonClick} className='text-3xl px-4'>+</button>
+                <div className="absolute top-[150px] left-5 z-10 ">
+                    <button onClick={handleAddButtonClick} className='text-3xl px-4 hover:rotate-90 transition duration-200'>+</button>
                     {showField && (
                         <div className='bg-[#A4A5A6] p-2 flex flex-col gap-2'>
                             <input
@@ -176,6 +185,20 @@ export default function Home() {
                                 onChange={(e) => setNewNodeText(e.target.value)}
                                 className='p-2 text-black border-2 border-black'
                             />
+
+                            <button onClick={addNode} className='bg-blue-500 text-white p-2 border-2 border-black'>
+                                Add Node
+                            </button>
+
+                        </div>
+                    )}
+                </div>
+                <div className="absolute top-[210px] left-4 z-9">
+                    <button onClick={handleShapeButtonClick} className='text-3xl px-4 hover:scale-110 transition duration-200 '>
+                        <Image src="/cylinder.png" alt="shape" width={25} height={25} />
+                    </button>
+                    {
+                        showShapeField && (
                             <select
                                 value={newNodeShape}
                                 onChange={(e) => setNewNodeShape(e.target.value)}
@@ -185,12 +208,9 @@ export default function Home() {
                                 <option value="rectangle">Rectangle</option>
                                 <option value="diamond">Diamond</option>
                             </select>
-                            <button onClick={addNode} className='bg-blue-500 text-white p-2 border-2 border-black'>
-                                Add Node
-                            </button>
 
-                        </div>
-                    )}
+                        )
+                    }
                 </div>
 
 

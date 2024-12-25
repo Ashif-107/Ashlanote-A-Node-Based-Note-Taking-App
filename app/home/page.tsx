@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useCallback, useState } from 'react';
 import {
     ReactFlow,
     MiniMap,
@@ -18,17 +18,18 @@ import {
 
 import '@xyflow/react/dist/style.css';
 
+import { CircleNode, DiamondNode } from '../Customs/CustomNodes';
 
 const initialNodes = [
     {
-        id: '1', position: { x: -300, y: 0 },
+        id: '1', position: { x: -300, y: 0 }, type: 'diamond',
         data: { label: 'Hold Left Mouse To Pan the View' },
         sourcePosition: Position.Right, // Right connector
         targetPosition: Position.Left,  // Left connector
 
     },
     {
-        id: '2', position: { x: 85, y: 0 },
+        id: '2', position: { x: 85, y: 0 }, type: 'circle',
         data: { label: 'Right Click To Delete the Node' },
         sourcePosition: Position.Right, // Right connector
         targetPosition: Position.Left,  // Left connector
@@ -40,7 +41,7 @@ const initialNodes = [
         targetPosition: Position.Left,  // Left connector
     },
     {
-        id: '4', position: { x: 0, y: 100 },
+        id: '4', position: { x: 0, y: 100 }, type: 'circle',
         data: { label: 'Right is source connector and Left is Target' },
         sourcePosition: Position.Right, // Right connector
         targetPosition: Position.Left,  // Left connector
@@ -53,6 +54,11 @@ const initialEdges = [
 
 ];
 
+const nodeTypes = {
+    circle: CircleNode,
+    diamond: DiamondNode,
+};
+
 export default function Home() {
     const [colorMode, setColorMode] = useState<ColorMode>('light');
 
@@ -60,6 +66,7 @@ export default function Home() {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
     const [newNodeText, setNewNodeText] = useState("");
+    const [newNodeShape, setNewNodeShape] = useState('circle');
 
     const [showField, setShowField] = useState(false);
 
@@ -69,7 +76,10 @@ export default function Home() {
 
 
     const onConnect = useCallback(
-        (params: { source: string; target: string }) => setEdges((eds) => addEdge(params, eds)),
+        (params: { source: string; target: string }) => {
+            const newEdge = { id: `e${params.source}-${params.target}`, ...params };
+            setEdges((eds) => addEdge(newEdge, eds));
+        },
         [setEdges],
     );
 
@@ -107,13 +117,15 @@ export default function Home() {
         const newNode = {
             id: `${nodes.length + 1}`,
             data: { label: newNodeText },
-            position: { x: Math.random() * 300, y: Math.random() * 300 },
+            position: { x: Math.random() * 150, y: Math.random() * 150 },
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
+            type: newNodeShape,
         };
 
         setNodes((nds) => [...nds, newNode]);
         setNewNodeText(""); // Clear the input field
+        setNewNodeShape('circle');
     };
 
 
@@ -133,6 +145,7 @@ export default function Home() {
                     onNodeContextMenu={onNodeContextMenu}
                     onEdgeClick={onEdgeClick}
                     fitView
+                    nodeTypes={nodeTypes}
                 />
                 <Controls />
                 <MiniMap nodeColor="#888" nodeStrokeWidth={1} maskColor="rgba(0, 0, 0, 0.3)" />
@@ -163,6 +176,15 @@ export default function Home() {
                                 onChange={(e) => setNewNodeText(e.target.value)}
                                 className='p-2 text-black border-2 border-black'
                             />
+                            <select
+                                value={newNodeShape}
+                                onChange={(e) => setNewNodeShape(e.target.value)}
+                                className="p-2 text-black border-2 border-black"
+                            >
+                                <option value="circle">Circle</option>
+                                <option value="rectangle">Rectangle</option>
+                                <option value="diamond">Diamond</option>
+                            </select>
                             <button onClick={addNode} className='bg-blue-500 text-white p-2 border-2 border-black'>
                                 Add Node
                             </button>

@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ashlanote
 
-## Getting Started
+**Ashlanote** is a node-based note-taking app designed to help you visually organize your ideas, thoughts, and projects. With a simple drag-and-drop interface, you can connect your notes and create dynamic mind maps that are both intuitive and powerful.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Node-based structure**: Organize your notes as nodes, easily connecting them with lines to create a mind map.
+- **Drag and drop**: Move, adjust, and rearrange nodes with ease.
+- **Interactive UI**: Simple, user-friendly interface for efficient note-taking and brainstorming.
+- **Variety**: Different kind of shapes which would be attractivly used to design the note. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## Snapshots of functionalities 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Simple and Elegent UI**
+![image](https://github.com/user-attachments/assets/9310399d-6c77-494b-ae37-5383d03f6a6c)
 
-## Learn More
+**Variety of Shapes**
+![image](https://github.com/user-attachments/assets/5f5cc4ef-44d5-4b2d-995d-a49a9d8ffc6c)
 
-To learn more about Next.js, take a look at the following resources:
+**And A DarkMode**
+![image](https://github.com/user-attachments/assets/15b73ebc-0b9e-4de0-ab02-55b8ee331ce9)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**A simple animated Landing page** -- very simple one just for namesake
+![image](https://github.com/user-attachments/assets/f3c3688d-2ba8-45f5-9319-23cc67e8d513)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🌍 Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend**: NextJs, React Flow
+- **Animation**: GSAP (for smooth, dynamic animations)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Future Implementations
+
+- working on Real-time updates - Stay in sync with changes across your session.
+- also working on Customizable - Modify the style and appearance of nodes and connections.
+
+- 

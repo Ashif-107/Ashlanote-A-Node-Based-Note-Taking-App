@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ChangeEventHandler, useCallback, useState } from 'react';
+import React, { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import {
     ReactFlow,
     MiniMap,
@@ -67,10 +67,27 @@ export default function Home() {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
     const [newNodeText, setNewNodeText] = useState("");
-    const [newNodeShape, setNewNodeShape] = useState('circle');
+    const [newNodeShape, setNewNodeShape] = useState('rectangle');
 
     const [showField, setShowField] = useState(false);
     const [showShapeField, setShowShapeField] = useState(false);
+
+    // Load nodes and edges from LocalStorage on initial render
+    useEffect(() => {
+        const savedNodes = localStorage.getItem('flow-nodes');
+        const savedEdges = localStorage.getItem('flow-edges');
+
+        if (savedNodes) setNodes(JSON.parse(savedNodes));
+        if (savedEdges) setEdges(JSON.parse(savedEdges));
+    }, []);
+
+    // Save nodes and edges to LocalStorage whenever they change
+    useEffect(() => {
+        localStorage.setItem('flow-nodes', JSON.stringify(nodes));
+        localStorage.setItem('flow-edges', JSON.stringify(edges));
+    }, [nodes, edges]);
+
+
 
     const handleAddButtonClick = () => {
         setShowField(!showField);
@@ -131,7 +148,7 @@ export default function Home() {
 
         setNodes((nds) => [...nds, newNode]);
         setNewNodeText(""); // Clear the input field
-        setNewNodeShape('circle');
+        setNewNodeShape(newNodeShape);
     };
 
 
